@@ -1,0 +1,16 @@
+os: linux
+
+dist: bionic
+
+language: bash
+
+services: docker
+
+jobs:
+  include:
+    - stage: building x86_64 container image
+      arch: amd64
+      script:
+        - docker build -t quay.io/powercloud/powervs-actions-container:latest .
+        - docker login quay.io -u $USER_QUAY -p $PWD_QUAY
+        - docker push quay.io/powercloud/powervs-actions-container:latest
